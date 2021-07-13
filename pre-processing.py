@@ -57,6 +57,8 @@ df1['casual_dining_bin'] = np.where(df1['rest_type'] == 'Casual Dining', 1, 0)
 # drop columns
 df1.drop(['online_order', 'book_table', 'rest_type', 'rate'], axis=1, inplace=True)
 
+# drop rows with missing values in cuisines
+df1.dropna(subset=['cuisines'], inplace=True)
 
 # create neighborhood binary variables
 # get count of neighborhoods by name
@@ -66,7 +68,7 @@ count_of_neighborhoods = df1['location'].value_counts().to_frame().reset_index()
 # 167 is the median number of restaurants in a neighborhood
 noi = count_of_neighborhoods.loc[count_of_neighborhoods['location'] >= 167, 'index'].unique()
 
-# filter data set for those neighbhorhoods of interest
+# filter data set for those neighborhoods of interest
 df1 = df1[df1['location'].isin(noi)]
 
 
