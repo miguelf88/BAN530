@@ -25,7 +25,6 @@ def create_rating(df):
     rating = [float(x) for x in rating]
 
     df['final_rating'] = rating
-    df = df[df['final_rating'] != 0]
 
 # -------------------------------------------------------------
 # READ IN DATA
@@ -51,12 +50,12 @@ df1 = df1.loc[(df1['rest_type'] == 'Casual Dining') | (df1['rest_type'] == 'Quic
 # create rating attribute
 create_rating(df1)
 
+# remove observations with no rating
+df1 = df1[df1['final_rating'] != 0.0]
+
 # create binary variable for chain
-# get count of restaurants by name
 rest_by_name = df1['name'].value_counts().to_frame().reset_index()
-# select those restaurants where there are at least 15 locations
 chains = rest_by_name.loc[rest_by_name['name'] >= 15, 'index'].unique()
-# create binary variable if restaurant is chain
 df1['chain'] = np.where(df1['name'].isin(chains), 1, 0)
 
 # create other binary variables
