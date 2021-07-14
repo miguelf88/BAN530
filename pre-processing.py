@@ -25,6 +25,7 @@ def create_rating(df):
     rating = [float(x) for x in rating]
 
     df['final_rating'] = rating
+    df = df[df['final_rating'] != 0]
 
 # -------------------------------------------------------------
 # READ IN DATA
