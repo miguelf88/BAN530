@@ -53,6 +53,10 @@ create_rating(df1)
 # remove observations with no rating
 df1 = df1[df1['final_rating'] != 0.0]
 
+# convert approximate cost to numeric
+df1['approx_cost(for two people)'] = df1['approx_cost(for two people)'].str.replace(',', '')
+df1['approx_cost(for two people)'] = df1['approx_cost(for two people)'].astype('float')
+
 # create binary variable for chain
 rest_by_name = df1['name'].value_counts().to_frame().reset_index()
 chains = rest_by_name.loc[rest_by_name['name'] >= 15, 'index'].unique()
