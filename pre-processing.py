@@ -50,7 +50,15 @@ df1 = df1.loc[(df1['rest_type'] == 'Casual Dining') | (df1['rest_type'] == 'Quic
 # create rating attribute
 create_rating(df1)
 
-# create binary variables
+# create binary variable for chain
+# get count of restaurants by name
+rest_by_name = df1['name'].value_counts().to_frame().reset_index()
+# select those restaurants where there are at least 15 locations
+chains = rest_by_name.loc[rest_by_name['name'] >= 15, 'index'].unique()
+# create binary variable if restaurant is chain
+df1['chain'] = np.where(df1['name'].isin(chains), 1, 0)
+
+# create other binary variables
 df1['online_order_bin'] = np.where(df1['online_order'] == 'Yes', 1, 0)
 df1['book_table_bin'] = np.where(df1['book_table'] == 'Yes', 1, 0)
 df1['casual_dining_bin'] = np.where(df1['rest_type'] == 'Casual Dining', 1, 0)
