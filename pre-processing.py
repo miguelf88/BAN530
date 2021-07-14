@@ -39,7 +39,7 @@ print('Finished reading in {:,} rows'.format(len(df)))
 df1 = df.copy()
 
 # drop columns
-cols_to_drop = ['url', 'phone', 'listed_in(type)', 'listed_in(city)']
+cols_to_drop = ['url', 'phone', 'listed_in(type)', 'listed_in(city)', 'reviews_list', 'menu_item']
 df1.drop(cols_to_drop, axis=1, inplace=True)
 
 # create subset for restaurant types of interest
